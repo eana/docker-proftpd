@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+if ! id $USERNAME >/dev/null 2>&1; then
+    echo Setting credentials to $USERNAME
+    useradd --shell /bin/sh --create-home --password $PASSWORD $USERNAME
+fi
+
+echo Starting proftpd
+exec proftpd --nodaemon
