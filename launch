@@ -1,9 +1,10 @@
 #!/bin/bash -e
 
-if ! id $USERNAME >/dev/null 2>&1; then
-    echo Setting credentials to $USERNAME
-    useradd --shell /bin/sh --create-home --password $PASSWORD $USERNAME
+if ! id "${USERNAME}" >/dev/null 2>&1; then
+    echo "Setting credentials to ${USERNAME}"
+    CRYPTED_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' "${PASSWORD}")
+    useradd --shell /bin/sh --create-home --password "${CRYPTED_PASSWORD}" "${USERNAME}"
 fi
 
-echo Starting proftpd
+echo "Starting proftpd"
 exec proftpd --nodaemon
