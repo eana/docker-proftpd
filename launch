@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/sh -e
 
 if ! id "${USERNAME}" >/dev/null 2>&1; then
     echo "Setting credentials to ${USERNAME}"
-    CRYPTED_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' "${PASSWORD}")
-    useradd --shell /bin/sh --create-home --password "${CRYPTED_PASSWORD}" "${USERNAME}"
+    adduser -s /bin/sh -h /ftp  -D "${USERNAME}"
+    echo "${USERNAME}:${PASSWORD}" | chpasswd
 fi
 
 echo "Starting proftpd"

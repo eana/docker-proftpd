@@ -1,11 +1,9 @@
-FROM debian:11.7-slim
-
-ENV DEBIAN_FRONTEND noninteractive
+FROM alpine:3.18.2
 
 RUN set -xe && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends -y proftpd && \
-    mkdir /ftp
+    apk add --update --no-cache proftpd && \
+    mkdir -vp /run/proftpd && \
+    touch /run/proftpd/proftpd.delay
 
 ADD launch /launch
 ADD proftpd.conf /etc/proftpd/proftpd.conf
