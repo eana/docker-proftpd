@@ -9,8 +9,6 @@ TAG ?= $(shell git describe --exact-match --tags 2>/dev/null)
 # The docker tags
 DOCKER_TAG = "395500896865.dkr.ecr.eu-west-1.amazonaws.com/${APP}:${TAG}"
 
-AWS_LOGIN_CMD = $(shell aws ecr get-login --region eu-west-1 --no-include-email)
-
 # -- High level targets --
 # We only list these targets in the help. The other targets can still be used
 # but it is generally better to call one of these.
@@ -43,4 +41,4 @@ push: image aws_login ## Builds and pushes the docker image to ECR
 .PHONY: aws_login
 aws_login:
 	@echo "Logging docker into AWS"
-	@eval ${AWS_LOGIN_CMD}
+	@aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 395500896865.dkr.ecr.eu-west-1.amazonaws.com
