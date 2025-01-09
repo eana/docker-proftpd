@@ -1,4 +1,4 @@
-FROM alpine:3.21.1
+FROM alpine:3.21.2
 
 RUN set -xe && \
     apk add --update --no-cache proftpd && \
